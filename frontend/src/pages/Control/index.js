@@ -82,13 +82,26 @@ export default function Control() {
     }
   };
 
-  const getExit = async (e, index) => {
+  // const getExit = async (e, id, index) => {
+  //   e.preventDefault();
+
+  //   console.log(index);
+
+  //   e.currentTarget.remove();
+
+  //   const value = new Date();
+
+  //   const hour = zeroLeft(value.getHours());
+  //   const min = zeroLeft(value.getMinutes());
+  //   const sec = zeroLeft(value.getSeconds());
+
+  //   const hourNow = `${hour}:${min}:${sec}`;
+
+  //   setExit(hourNow);
+  // };
+
+  const handleUpdate = async (e, id, index) => {
     e.preventDefault();
-
-    setExit(e.target.value);
-
-    console.log(list);
-    e.currentTarget.remove();
 
     const value = new Date();
 
@@ -99,10 +112,6 @@ export default function Control() {
     const hourNow = `${hour}:${min}:${sec}`;
 
     setExit(hourNow);
-  };
-
-  const handleUpdate = async (e, id, index) => {
-    e.preventDefault();
 
     const newControls = [...control];
     newControls.splice(index, 1);
@@ -114,8 +123,9 @@ export default function Control() {
         plate: setPlate(),
         destiny: setDestiny(),
         enter: setEnter(),
-        exit,
+        exit: hourNow,
       });
+
       toast.success('Saída Finalizada com sucesso!');
       history.push(`/control`);
     } catch (err) {
@@ -185,62 +195,46 @@ export default function Control() {
             </button>
           </div>
         </Form>
+        {control.map((controls, index) => (
+          <div key={controls.id}>
+            {controls.exit == '' ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Placa</th>
+                    <th>Destino</th>
+                    <th>Entrada</th>
+                    <th>Saída</th>
+                  </tr>
+                </thead>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Placa</th>
-              <th>Destino</th>
-              <th>Entrada</th>
-              <th>Saída</th>
-              <th>Dar saída</th>
-              <th>Finalizar controle</th>
-            </tr>
-          </thead>
+                <tbody>
+                  <tr>
+                    <th>{controls.date}</th>
+                    <th>{controls.plate}</th>
+                    <th>{controls.destiny}</th>
+                    <th>{controls.enter}</th>
 
-          {control.map((controls, index) => (
-            <tbody key={controls.id}>
-              <tr>
-                <th>{controls.date}</th>
-                <th>{controls.plate}</th>
-                <th>{controls.destiny}</th>
-                <th>{controls.enter}</th>
-                <th>
-                  <input
-                    type="text"
-                    id="exit"
-                    value={exit}
-                    onChange={e => setExit(e.target.value)}
-                    placeholder="Saída"
-                  />
-                </th>
-                <th>
-                  <button
-                    type="button"
-                    id="btn-add"
-                    onClick={e => {
-                      getExit(e, index);
-                    }}
-                  >
-                    +
-                  </button>
-                </th>
-                <th>
-                  <button
-                    type="button"
-                    id="btn-end"
-                    onClick={e => {
-                      handleUpdate(e, controls.id, index);
-                    }}
-                  >
-                    Finalizar
-                  </button>
-                </th>
-              </tr>
-            </tbody>
-          ))}
-        </table>
+                    <th>
+                      <button
+                        type="button"
+                        id="btn-end"
+                        onClick={e => {
+                          handleUpdate(e, controls.id, index);
+                        }}
+                      >
+                        Finalizar
+                      </button>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            ) : (
+              <p hidden>Aberto</p>
+            )}
+          </div>
+        ))}
       </ControlContainer>
     </Container>
   );
