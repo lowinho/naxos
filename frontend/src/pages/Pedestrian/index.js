@@ -9,7 +9,7 @@ import { Title, Form } from './styled';
 import axios from '../../services/axios';
 import history from '../../services/history';
 
-export default function NewTeacher({ match }) {
+export default function Pedestrian({ match }) {
   const id = get(match, 'params.id', '');
 
   const [name, setName] = useState('');
@@ -113,7 +113,7 @@ export default function NewTeacher({ match }) {
           phone,
         });
         toast.success('Pedestre editado com sucesso!');
-        history.push('/pedestrians');
+        history.push('/pedestrian-list');
       } else {
         await axios.post(`/pedestrians/`, {
           name,
@@ -127,18 +127,11 @@ export default function NewTeacher({ match }) {
           phone,
         });
         toast.success('Pedestre criado com sucesso!');
-        history.push(`/pedestrians`);
+        history.push(`/pedestrian-list`);
       }
     } catch (err) {
-      // const status = get(err, 'response.status', 0);
-      const data = get(err, 'response.data', {});
-      const errors = get(data, 'errors', []);
-
-      if (errors.length > 0) {
-        errors.map(error => toast.error(error));
-      } else {
-        toast.error(errors);
-      }
+      toast.error('Erro ao criar pedestre, tente novamente mais tarde!');
+      history.push(`/pedestrian`);
     }
   };
 
@@ -244,6 +237,6 @@ export default function NewTeacher({ match }) {
   );
 }
 
-NewTeacher.propTypes = {
+Pedestrian.propTypes = {
   match: PropTypes.shape({}).isRequired,
 };

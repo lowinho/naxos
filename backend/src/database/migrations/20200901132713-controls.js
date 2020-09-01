@@ -38,4 +38,3 @@ module.exports = {
 
   down: (queryInterface) => queryInterface.dropTable('controls'),
 };
-

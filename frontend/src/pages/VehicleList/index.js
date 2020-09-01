@@ -23,13 +23,13 @@ export default function VehicleList() {
   return (
     <Container>
       <StudentContainer>
-        <Link className="add" to="/vehicle-list/vehicle">
+        <Link className="add" to="/vehicle-list/register">
           <FaPlusSquare size={12} data-tip="Adicionar Veículo" />
           <ReactTooltip />
         </Link>
         <span>Cadastrar novo Veículo</span>
         <Title>
-          <h1>Véículos</h1>
+          <h1>Veículos</h1>
         </Title>
         <table>
           <thead>
@@ -37,16 +37,8 @@ export default function VehicleList() {
               <th>Nome</th>
               <th>RG</th>
               <th>CPF</th>
-              <th>Rua</th>
-              <th>Número</th>
-              <th>Bairro</th>
-              <th>Cidade</th>
-              <th>UF</th>
               <th>Telefone</th>
               <th>Placa</th>
-              <th>Marca</th>
-              <th>Modelo</th>
-              <th>Cor</th>
             </tr>
           </thead>
 
@@ -54,22 +46,14 @@ export default function VehicleList() {
             <tbody key={String(vehicles.id)}>
               <tr>
                 <td>
-                  <Link to={`/vehicle-list/control-register/${vehicles.id}`}>
+                  <Link to={`/vehicle-list/register/${vehicles.id}`}>
                     {vehicles.name}
                   </Link>
                 </td>
                 <td>{vehicles.rg}</td>
                 <td>{vehicles.cpf}</td>
-                <td>{vehicles.street}</td>
-                <td>{vehicles.number}</td>
-                <td>{vehicles.district}</td>
-                <td>{vehicles.city}</td>
-                <td>{vehicles.uf}</td>
                 <td>{vehicles.phone}</td>
                 <td>{vehicles.plate}</td>
-                <td>{vehicles.assembler}</td>
-                <td>{vehicles.model}</td>
-                <td>{vehicles.color}</td>
               </tr>
             </tbody>
           ))}

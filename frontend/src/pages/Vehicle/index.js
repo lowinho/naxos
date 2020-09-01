@@ -9,7 +9,7 @@ import { Title, Form } from './styled';
 import axios from '../../services/axios';
 import history from '../../services/history';
 
-export default function NewTeacher({ match }) {
+export default function Vehicle({ match }) {
   const id = get(match, 'params.id', '');
 
   const [name, setName] = useState('');
@@ -35,7 +35,6 @@ export default function NewTeacher({ match }) {
         // const Foto = get(data, 'Fotos[0].url', '');
 
         // setFoto(Foto);
-
         setName(data.name);
         setRg(data.rg);
         setCpf(data.cpf);
@@ -50,17 +49,14 @@ export default function NewTeacher({ match }) {
         setModel(data.model);
         setColor(data.color);
       } catch (err) {
-        const status = get(err, 'response.status', 0);
-        const errors = get(err, 'response.data.errors', []);
+        toast.error('Erro ao encontrar cadastro do veículo');
 
-        if (status === 400) errors.map(error => toast.error(error));
         history.push('/');
       }
     }
 
     getData();
   }, [
-    id,
     setName,
     setRg,
     setCpf,
@@ -72,6 +68,7 @@ export default function NewTeacher({ match }) {
     setAssembler,
     setModel,
     setColor,
+    id,
   ]);
 
   const handleSubmit = async e => {
@@ -158,7 +155,7 @@ export default function NewTeacher({ match }) {
           color,
         });
         toast.success('Veículo editado com sucesso!');
-        history.push('/vehicles');
+        history.push('/vehicle-list');
       } else {
         await axios.post(`/vehicles/`, {
           name,
@@ -176,18 +173,13 @@ export default function NewTeacher({ match }) {
           color,
         });
         toast.success('Veículo criado com sucesso!');
-        history.push(`/vehicles`);
+        history.push(`/vehicle-list`);
       }
     } catch (err) {
-      // const status = get(err, 'response.status', 0);
-      const data = get(err, 'response.data', {});
-      const errors = get(data, 'errors', []);
-
-      if (errors.length > 0) {
-        errors.map(error => toast.error(error));
-      } else {
-        toast.error(errors);
-      }
+      toast.error(
+        'Erro ao criar cadastro do veículo, tente novamente mais tarde!'
+      );
+      history.push(`/vehicles`);
     }
   };
 
@@ -331,6 +323,6 @@ export default function NewTeacher({ match }) {
   );
 }
 
-NewTeacher.propTypes = {
+Vehicle.propTypes = {
   match: PropTypes.shape({}).isRequired,
 };

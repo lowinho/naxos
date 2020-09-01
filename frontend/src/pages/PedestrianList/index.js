@@ -49,7 +49,7 @@ export default function PedestrianList() {
             <tbody key={String(pedestrian.id)}>
               <tr>
                 <td>
-                  <Link to={`/pedestrian-list/pedestrian/${pedestrian.id}`}>
+                  <Link to={`/pedestrian-list/register/${pedestrian.id}`}>
                     {pedestrian.name}
                   </Link>
                 </td>

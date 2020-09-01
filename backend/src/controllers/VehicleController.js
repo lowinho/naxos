@@ -70,7 +70,7 @@ class VehicleController {
 
     async show(req, res) {
       try {
-        const vehicle = await vehicle.findByPk(req.params.id);
+        const vehicle = await Vehicle.findByPk(req.params.id);
         const { id,
           name,
           rg,
@@ -84,8 +84,10 @@ class VehicleController {
           plate,
           assembler,
           model,
-          color } = Vehicle;
-        return res.json({ id,
+          color
+        } = vehicle;
+        return res.json({
+          id,
           name,
           rg,
           cpf,
@@ -116,8 +118,9 @@ class VehicleController {
         });
       }
 
-      const vehicleUpdate = await Vehicle.update(req.body);
-      const { id,
+      const vehicleUpdate = await vehicle.update(req.body);
+      const {
+        id,
         name,
         rg,
         cpf,
@@ -131,7 +134,8 @@ class VehicleController {
         assembler,
         model,
         color } = vehicleUpdate;
-      return res.json({ id,
+      return res.json({
+        id,
         name,
         rg,
         cpf,
@@ -147,6 +151,7 @@ class VehicleController {
         color });
 
     } catch (e) {
+      console.log(e)
         return res.status(400).json({
           errors: 'Vehicle not found'
         });
